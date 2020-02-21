@@ -18,5 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('ListaItens','ListaItensController')->only([
-    'index', 'show', 'store', 'edit','put','update','destroy'
+    'index', 'show', 'store', 'put','destroy'
+]);
+
+Route::apiResource('tasks','TasksController')->only([
+    'index', 'show', 'store','put','update','destroy'
 ]);
