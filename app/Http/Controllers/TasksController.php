@@ -17,6 +17,8 @@ class TasksController extends Controller
     {
         return Tasks::all();
 
+        // return response()->json(null, 204);
+
     }
 
     /**
@@ -49,6 +51,11 @@ class TasksController extends Controller
     public function show($id)
     {
         return Tasks::find($id);
+
+        // return response()->json([
+        //     'tasks'     => $show,
+        // ],204);
+
     }
 
     /**

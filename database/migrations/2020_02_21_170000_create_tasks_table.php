@@ -17,10 +17,10 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('titulo',50);
-            $table->string('descricao',255);
+            $table->string('descricao',255)->nullable();
             $table->date('data_vencimento')->nullable();
             $table->date('data_realizado')->nullable();
-            $table->boolean('realizado');
+            $table->boolean('realizado')->default(0);
             $table->timestamps();
         });
     }

@@ -1,0 +1,2 @@
+[23-Feb-2020 13:30:23 America/Manaus] PHP Fatal error:  Class 'App\Http\Controllers\Api\Controller' not found in /home/stoneati/sistemas.offboard.com.br/app/Http/Controllers/Api/UserController.php on line 9
+[23-Feb-2020 13:34:36 America/Manaus] PHP Fatal error:  Class 'App\Http\Controllers\Api\Controller' not found in /home/stoneati/sistemas.offboard.com.br/app/Http/Controllers/Api/UserController.php on line 10

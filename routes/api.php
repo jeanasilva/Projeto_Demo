@@ -13,14 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::apiResource('ListaItens','ListaItensController')->only([
     'index', 'show', 'store', 'put','destroy'
 ]);
 
 Route::apiResource('tasks','TasksController')->only([
-    'index', 'show', 'store','put','update','destroy'
+    'index', 'show', 'store','put','update','destroy','delete'
 ]);
+
+Route::get('users','Api\\UserController@index');
