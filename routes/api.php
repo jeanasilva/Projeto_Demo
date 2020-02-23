@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteGroup;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +22,12 @@ Route::apiResource('ListaItens','ListaItensController')->only([
     'index', 'show', 'store', 'put','destroy'
 ]);
 
-Route::apiResource('tasks','TasksController')->only([
-    'index', 'show', 'store','put','update','destroy','delete'
-]);
+Route::group(['middleware' => ['apiJWT']], function () {
+    Route::get('users','Api\\UserController@index');
+    Route::apiResource('tasks','TasksController')->only([
+        'index', 'show', 'store','put','update','destroy','delete'
+    ]);
+});
 
-Route::get('users','Api\\UserController@index');
+Route::post('auth/login', 'Api\\AuthController@login');
+
