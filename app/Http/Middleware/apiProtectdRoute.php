@@ -26,7 +26,7 @@ class apiProtectdRoute extends BaseMiddleware
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
                 return response()->json(['status' => 'Token encontra-se expirado'],403);
             } else {
-                return response()->json(['status' => 'Token de Autorização não encontrado'],404);
+                return response()->json(['status' => 'Token de Autorização não encontrado'],401);
             }
         }
 
