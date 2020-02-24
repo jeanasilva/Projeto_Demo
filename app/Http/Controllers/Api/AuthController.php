@@ -19,6 +19,19 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
+        /**
+     * Log the user out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Logout Realizado com Sucesso!!!']);
+    }
+
     /**
      * Get the token array structure.
      *
