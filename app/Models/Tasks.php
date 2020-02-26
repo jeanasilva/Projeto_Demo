@@ -14,4 +14,5 @@ class Tasks extends Model
         'data_realizado',
         'realizado'
     ];
+    protected $guarded = [];
 }

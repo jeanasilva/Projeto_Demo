@@ -23,12 +23,18 @@ Route::apiResource('ListaItens','ListaItensController')->only([
 ]);
 
 Route::group(['middleware' => ['apiJWT']], function () {
-    Route::post('auth/login', 'Api\\AuthController@login');
-    Route::post('auth/logout', 'Api\\AuthController@logout');
-    Route::get('users','Api\\UserController@index');
-    Route::apiResource('tasks','TasksController')->only([
-        'index', 'show', 'store','put','update','destroy','delete'
-    ]);
+    // Route::post('auth/login', 'Api\\AuthController@login');
+    // Route::post('auth/logout', 'Api\\AuthController@logout');
+    // Route::get('users','Api\\UserController@index');
+    // Route::apiResource('tasks','TasksController')->only([
+    //     'index', 'show', 'store','put','update','destroy','delete'
+    // ]);
+        Route::get('tasks','TasksController@index');
+        Route::get('tasks/{id}','TasksController@show');
+        Route::post('tasks','TasksController@store');
+        Route::put('tasks/{id}','TasksController@update');
+        Route::delete('tasks/{id}','TasksController@destroy');
+
 });
 
 Route::post('auth/login', 'Api\\AuthController@login');

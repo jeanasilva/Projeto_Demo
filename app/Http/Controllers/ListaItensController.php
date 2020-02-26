@@ -13,9 +13,11 @@ class ListaItensController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ListaItens::all();
+        // $user_id = $request.auth()->user();
+        // $dados = ListaItens::where(['user_id'] == $user_id);
+        // return $dados;
     }
 
     /**
@@ -85,6 +87,21 @@ class ListaItensController extends Controller
      */
     public function destroy($id)
     {
-        return ListaItens::destroy($id);
+        // $user_id = $request.auth()->user();
+
+        // $task = ListaItens::find($id);
+        // if ($task->user_id == $user_id) {
+        //     $result = ListaItens::destroy($id);
+        //     if ($result == 1) {
+        //         return response()->json(['msg' => 'deletado com sucesso'], 203);
+        //     } else {
+        //         return response()->json(['msg' => 'não foi possível deletar'], 500);
+        //     }
+        // } else {
+        //     return response()->json(['msg' => 'voce não pode deletar esta tarefa'], 402);
+        // }
+
+
+
     }
 }
