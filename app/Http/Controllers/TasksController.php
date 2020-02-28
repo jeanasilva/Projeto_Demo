@@ -5,23 +5,14 @@ namespace App\Http\Controllers;
 use JWTAuth;
 use App\Models\Tasks;
 use Illuminate\Http\Request;
+// use Http\Controllers\Api\AuthController;
 // use Http\Middleware\apiProtectdRoute;
-// use Closure;
+use Auth;
 
 class TasksController extends Controller
 {
-     /**
-     * @var
-     */
-     protected $user;
 
-    /**
-     * TaskController constructor.
-     */
-    public function __construct()
-    {
-        $this->user = JWTAuth::parseToken()->authenticate();
-    }
+
 
     /**
      * Display a listing of the resource.
@@ -31,20 +22,9 @@ class TasksController extends Controller
     public function index()
     {
 
-        $tasks = $this->user->tasks()->get(['titulo','descricao'])->toArray();
+        $user = JWTAuth::parseToken()->authenticate();
+        $tasks = Tasks::where('user_id',$user->id)->get();
         return $tasks;
-
-        if ($tasks) {
-            return response()->json([
-                'success' => true
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, task could not be updated.'
-            ], 500);
-        }
-
 
     }
 
@@ -66,28 +46,16 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
-        // return Tasks::create($request->all());
 
-        $this->validate($request,[
-            'titulo'    => 'required',
-            'descricao' => 'required'
-        ]);
+        $user_id = Auth::user()->id;
 
-        $task = new Tasks();
-        $task->titulo    = $request->titulo;
-        $task->descricao = $request->descricao;
+        $task = new Tasks;
+        $task->titulo    = 'titulo';
+        $task->descricao = 'descricao';
+        $task->user_id   = $user_id;
+        $task->save();
 
-        if ($this->user->tasks()->save($task))
-            return response()->json([
-                'sucess' => true,
-                'task'   => $task
-            ]);
-        else
-            return response()->json([
-                'sucess'    => false,
-                'message'   => 'Desculpe, task não adicionada'
-            ],500);
-
+        return $task;
 
     }
 
@@ -100,16 +68,9 @@ class TasksController extends Controller
     public function show($id)
     {
 
-        $task = $this->user->tasks()->find($id);
-
-        if (!$task) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, task with id ' . $id . ' cannot be found.'
-            ], 400);
-        }
-
-        return $task;
+        $user = JWTAuth::parseToken()->authenticate();
+        $tasks = Tasks::where('user_id',$user->id)->get();
+        return $tasks;
 
     }
 
@@ -133,27 +94,20 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $tasks = $this->user->tasks()->find($id);
 
-        if (!$task) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, task with id ' . $id . ' cannot be found.'
-            ], 400);
-        }
+        $user_id = Auth::user()->id;
 
-        $updated = $task->fill($request->all())->save();
+        $tasks   = Tasks::where('user_id',$user_id)->get();
 
-        if ($updated) {
-            return response()->json([
-                'success' => true
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, task could not be updated.'
-            ], 500);
-        }
+        $task = new Tasks;
+
+        $task->id              = $request->id;
+        $task->titulo          = $request->titulo;
+        $task->descricao       = $request->descricao;
+        $task->user_id         = $user_id;
+        $task->save();
+
+        return $task;
 
         // $tasks->titulo          = $request->input('titulo');
         // $tasks->descricao       = $request->input('descricao');
