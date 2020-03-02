@@ -96,26 +96,20 @@ class TasksController extends Controller
     {
 
         $user_id = Auth::user()->id;
+        $task    = Tasks::find($id);
 
-        $tasks   = Tasks::where('user_id',$user_id)->get();
+        if ($task->user_id == $user_id) {
 
-        $task = new Tasks;
+            $task->titulo                = $request->titulo;
+            $task->descricao             = $request->descricao;
+            $task->data_vencimento       = $request->data_vencimento;
+            $task->data_realizado        = $request->data_realizado;
+            $task->realizado             = $request->realizado;
+            $task->save();
 
-        $task->id              = $request->id;
-        $task->titulo          = $request->titulo;
-        $task->descricao       = $request->descricao;
-        $task->user_id         = $user_id;
-        $task->save();
-
-        return $task;
-
-        // $tasks->titulo          = $request->input('titulo');
-        // $tasks->descricao       = $request->input('descricao');
-        // $tasks->data_vencimento = $request->input('data_vencimento');
-        // $tasks->data_realizado  = $request->input('data_realizado');
-        // $tasks->realizado       = $request->input('realizado');
-
-        // $tasks->save();
+        }else{
+            return $task;
+        }
     }
 
     /**
