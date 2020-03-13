@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use JWTAuth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Auth;
 
 
 
@@ -17,9 +19,25 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
 
-        // return response()->json($users);
+        $user_id = JWTAuth::parseToken()->authenticate();
+        $users   = User::where('id',$user_id->id)->get();
+
+        // $credentials = $request->only(['email', 'password']);
+
+        if (!$token = $users) {
+            return response()->json(['error' => 'Não Autorizado, verificar usuário e senha digitado'], 401);
+        }
+        else{
+            return $users;
+        }
+
+
+
+        // if ($user_id->email == $users->email)
+        //     return $users;
+        // else
+        //    echo 'Usuário Diferente!';
     }
 
     /**

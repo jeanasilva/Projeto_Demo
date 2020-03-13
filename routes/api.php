@@ -14,28 +14,25 @@ use Illuminate\Routing\RouteGroup;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
 Route::apiResource('ListaItens','ListaItensController')->only([
     'index', 'show', 'store', 'put','destroy'
 ]);
 
 Route::group(['middleware' => ['apiJWT']], function () {
-    // Route::post('auth/login', 'Api\\AuthController@login');
-    // Route::post('auth/logout', 'Api\\AuthController@logout');
-    // Route::get('users','Api\\UserController@index');
-    // Route::apiResource('tasks','TasksController')->only([
-    //     'index', 'show', 'store','put','update','destroy','delete'
-    // ]);
         Route::get('tasks','TasksController@index');
         Route::get('tasks/{id}','TasksController@show');
         Route::post('tasks','TasksController@store');
         Route::put('tasks/{id}','TasksController@update');
         Route::delete('tasks/{id}','TasksController@destroy');
+        Route::get('auth/users','Api\\UserController@index');
 
 });
 
 Route::post('auth/login', 'Api\\AuthController@login');
+Route::post('auth/register','Api\\AuthController@register');
+
 

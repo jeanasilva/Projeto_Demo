@@ -50,8 +50,8 @@ class TasksController extends Controller
         $user_id = Auth::user()->id;
 
         $task = new Tasks;
-        $task->titulo    = 'titulo';
-        $task->descricao = 'descricao';
+        $task->titulo    = $request->titulo;
+        $task->descricao = $request->descricao;
         $task->user_id   = $user_id;
         $task->save();
 
